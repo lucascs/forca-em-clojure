@@ -58,6 +58,8 @@
 )
 
 ;; comecamos o jogo com o total de vidas, a palavra secreta, e nada de acertos
+;; no repl
+;; (require '[forca.core :as forca] :reload)
 ;; (forca/comeca-o-jogo) pra jogar
 (defn comeca-o-jogo []
 	(jogo total-de-vidas palavra-secreta #{})
