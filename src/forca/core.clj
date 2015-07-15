@@ -38,15 +38,12 @@
 	(empty? (letras-faltantes palavra acertos))
 )
 
-;; if dentro de if
+;; if dentro de if => cond
 (defn jogo [vidas palavra acertos]
-	(if (= vidas 0) (perdeu) 
-		(if (acertou-a-palavra-toda? palavra acertos) 
-			(ganhou) 
-			(avalia-chute (le-letra!) vidas palavra acertos)
-		)
-	)
-)
+	(cond
+		(= vidas 0) (perdeu) 
+		(acertou-a-palavra-toda? palavra acertos) (ganhou) 
+		:else (avalia-chute (le-letra!) vidas palavra acertos)))
 
 ;; conj adiciona no conjunto
 ;; dec diminui 1 na variavel
