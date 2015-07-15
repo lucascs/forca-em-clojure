@@ -10,10 +10,10 @@
 (def palavra-secreta "MELANCIA")
 
 (defn perdeu []
-	(print "Você perdeu, mané!"))
+	(println "Você perdeu, mané!"))
 
 (defn ganhou []
-	(print "Caraca, parabéns!"))
+	(println "Caraca, parabéns!"))
 
 ;; .contains invoca funcao do java
 ;; ? no fim, é pq retorna booleano
@@ -34,8 +34,18 @@
 (defn acertou-a-palavra-toda? [palavra acertos]
 	(empty? (letras-faltantes palavra acertos)))
 
+
+(defn imprime-forca [vidas palavra acertos]
+	(println "Vidas " vidas)
+	(map (fn [letra] 
+		(if (contains? acertos (str letra)) 
+			(println letra " ") 
+			(println "_" " ")) 
+		) (seq palavra)))
+
 ;; if dentro de if => cond
 (defn jogo [vidas palavra acertos]
+	(imprime-forca vidas palavra acertos)
 	(cond
 		(= vidas 0) (perdeu) 
 		(acertou-a-palavra-toda? palavra acertos) (ganhou) 
@@ -44,9 +54,14 @@
 ;; conj adiciona no conjunto
 ;; dec diminui 1 na variavel
 (defn avalia-chute [chute vidas palavra acertos]
-	(if (acertou? chute palavra) 
-		(jogo vidas palavra (conj acertos chute))
-		(jogo (dec vidas) palavra acertos)))
+	(if (acertou? chute palavra)
+		(do 
+			(println "Acertou a letra!")
+			(jogo vidas palavra (conj acertos chute)))
+		(do
+			(println "Ixi, errou a letra!")
+			(jogo (dec vidas) palavra acertos))
+		))
 
 ;; comecamos o jogo com o total de vidas, a palavra secreta, e nada de acertos
 ;; no repl
