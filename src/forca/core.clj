@@ -1,4 +1,5 @@
-(ns forca.core)
+; lein new app forca
+(ns forca.core (:gen-class))
 
 ;; declarando a função, para que, no momento da compilação, ele
 ;; saiba que existe uma "avalia-chute", que é invocada pela jogo
@@ -53,3 +54,7 @@
 ;; (forca/comeca-o-jogo) pra jogar
 (defn comeca-o-jogo []
 	(jogo total-de-vidas palavra-secreta #{}))
+
+(defn -main [& args]
+	(comeca-o-jogo))
+
