@@ -33,11 +33,10 @@
 
 (defn imprime-forca [vidas palavra acertos]
 	(println "Vidas " vidas)
-	(map (fn [letra] 
+	(doseq [letra (seq palavra)] 
 		(if (contains? acertos (str letra)) 
 			(println letra " ") 
-			(println "_" " ")) 
-		) (seq palavra)))
+			(println "_" " "))))
 
 ;; if dentro de if => cond
 (defn jogo [vidas palavra acertos]
