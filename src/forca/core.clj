@@ -27,7 +27,8 @@
 ;; fn declarando uma função
 ;; seq quebra uma string em uma lista de chars
 (defn letras-faltantes [palavra acertos]
-	(filter (fn [letra] (not (contains? acertos (str letra)))) (seq palavra)))
+	(remove (fn [letra] (contains? acertos (str letra))) (seq palavra))
+)
 
 (defn acertou-a-palavra-toda? [palavra acertos]
 	(empty? (letras-faltantes palavra acertos)))
