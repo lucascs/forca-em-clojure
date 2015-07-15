@@ -1,10 +1,6 @@
 ; lein new app forca
 (ns forca.core (:gen-class))
 
-;; declarando a função, para que, no momento da compilação, ele
-;; saiba que existe uma "avalia-chute", que é invocada pela jogo
-(declare avalia-chute)
-
 ;; definindo o total de vidas que nosso jogo tem, e a palavra secreta
 (def total-de-vidas 6)
 (def palavra-secreta "MELANCIA")
@@ -49,19 +45,17 @@
 	(cond
 		(= vidas 0) (perdeu) 
 		(acertou-a-palavra-toda? palavra acertos) (ganhou) 
-		:else (avalia-chute (le-letra!) vidas palavra acertos)))
-
-;; conj adiciona no conjunto
-;; dec diminui 1 na variavel
-(defn avalia-chute [chute vidas palavra acertos]
-	(if (acertou? chute palavra)
-		(do 
-			(println "Acertou a letra!")
-			(jogo vidas palavra (conj acertos chute)))
-		(do
-			(println "Ixi, errou a letra!")
-			(jogo (dec vidas) palavra acertos))
-		))
+		:else 
+		(let [chute (le-letra!)]
+			(if (acertou? chute palavra)
+			(do 
+				(println "Acertou a letra!")
+				(recur vidas palavra (conj acertos chute)))
+			(do
+				(println "Ixi, errou a letra!")
+				(recur (dec vidas) palavra acertos))
+			)
+		)))
 
 ;; comecamos o jogo com o total de vidas, a palavra secreta, e nada de acertos
 ;; no repl
